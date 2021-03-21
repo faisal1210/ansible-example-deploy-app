@@ -1,0 +1,9 @@
+---
+- name: Install kops & kubectl
+  hosts: webserver
+  user: root
+  #sudo: yes
+  roles:
+    - kops-install
+    - kubectl-install
+    - create-cluster

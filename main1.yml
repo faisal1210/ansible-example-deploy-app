@@ -1,0 +1,9 @@
+---
+- name: Install nginx, php-fpm, mysql dengan ansible
+  hosts: webserver
+  user: root
+  #sudo: yes
+  roles:
+    - nginx
+    - php
+    - mysql

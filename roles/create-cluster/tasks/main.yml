@@ -1,0 +1,14 @@
+---
+- name: Create Cluster
+  shell: |
+    export AWS_ACCESS_KEY_ID=YOUR_AWS_KEY
+    export AWS_SECRET_ACCESS_KEY=YOUR_AWS_KEY
+    #export AWS_PROFILE=admin
+    #export AWS_SDK_LOAD_CONFIG=true
+    kops create cluster --zones=ap-southeast-1a --node-count=3 --master-count=1 --node-size=t2.micro --master-size=t2.medium --ssh-public-key=/root/.ssh/id_rsa.pub --name=kube.ical.host --state=s3://belajarkubecoy
+- name: Update Cluster
+  shell: |
+    export AWS_ACCESS_KEY_ID=YOUR_AWS_KEY
+    export AWS_SECRET_ACCESS_KEY=YOUR_AWS_KEY
+    #export AWS_PROFILE=admin
+    kops update cluster --name kube.ical.host --state s3://belajarkubecoy --yes --admin

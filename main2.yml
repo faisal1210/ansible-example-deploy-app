@@ -1,0 +1,47 @@
+---
+- hosts: webserver
+  user: root
+  #sudo: yes
+  tasks:
+    - name: Clone app file from repo
+      git:
+        repo: https://github.com/faisal1210/SmallProject3-Cilsy.git
+        dest: /root/SmallProject3-Cilsy
+        version: HEAD
+        force: yes
+    - name: Create folder sosmed.ical.host
+      file:
+        path: /var/www/sosmed.ical.host 
+        state: directory
+        mode: 0755
+    - name: Copy file app sosmed
+      synchronize:
+        src=/root/SmallProject3-Cilsy/sosmed/sosial-media/ 
+        dest=/var/www/sosmed.ical.host/ 
+      delegate_to: "{{ inventory_hostname }}"
+    - name: create db sosmed
+      mysql_db: name=dbsosmed state=present login_user=root login_password=YOUR_PASS_DB
+    - name: import db sosmed
+      mysql_db: name=dbsosmed state=import target=/root/SmallProject3-Cilsy/sosmed/dbsosmed.sql login_user=root login_password=YOUR_PASS_DB    
+    - name: Create folder profile.ical.host
+      file:
+        path: /var/www/profile.ical.host
+        state: directory
+        mode: 0755
+    - name: Copy file app profile
+      synchronize:
+        src=/root/SmallProject3-Cilsy/profile/webprofile-app/
+        dest=/var/www/profile.ical.host/
+      delegate_to: "{{ inventory_hostname }}"
+    - name: Create folder blog.ical.host
+      file:
+        path: /var/www/blog.ical.host
+        state: directory
+        mode: 0755
+    - name: Copy file app blog
+      synchronize:
+        src=/root/SmallProject3-Cilsy/blog/wordpress/
+        dest=/var/www/blog.ical.host/
+      delegate_to: "{{ inventory_hostname }}"
+    - name: create db blog
+      mysql_db: name=blog state=present login_user=root login_password=YOUR_PASS_DB

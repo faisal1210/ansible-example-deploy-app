@@ -1,0 +1,4 @@
+---
+KOPS_CLUSTER_NAME: "kube.ical.host"
+KOPS_STATE_STORE: "s3://belajarkubecoy"
+aws_zones: "ap-southeast-1a"
